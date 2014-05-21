@@ -1,5 +1,7 @@
 package co.davidmesa.tcfsfb;
 
+import co.rolon.js.comunicacion.Comunicacion;
+import co.rolon.js.estructuras.CustomHashMap;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,12 @@ public class LoadActivity extends ActionBarActivity {
 		if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
+		}
+		
+		try {
+			System.out.println(Comunicacion.send("auth", new CustomHashMap().put("id", "juan").put("password", "juan"), 1));
+		} catch (Exception e) {
+			e.getStackTrace();
 		}
 	}
 
