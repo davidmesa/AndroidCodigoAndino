@@ -5,7 +5,7 @@
  * should not be modified by hand.
  */
 
-package co.davidmesa.comunicacion;
+package co.rolon.js.comunicacion;
 
 public final class R {
     public static final class attr {

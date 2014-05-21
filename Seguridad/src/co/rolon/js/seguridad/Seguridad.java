@@ -1,4 +1,4 @@
-package co.rolon.js.comunicacion;
+package co.rolon.js.seguridad;
 
 import java.security.PublicKey;
 
