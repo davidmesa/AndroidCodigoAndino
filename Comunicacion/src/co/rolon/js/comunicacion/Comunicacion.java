@@ -16,11 +16,11 @@ import co.rolon.js.estructuras.CustomHashMap;
 
 public class Comunicacion {
 
-	private final static String URL = "http://157.253.224.67:8080/TeleConsulta-war/";
+	private final static String URL = "http://157.253.224.67:8080/TeleConsulta-war/cliente/movil/";
 	
-	private static BufferedOutputStream out;
-	
-	private static BufferedInputStream in;
+//	private static BufferedOutputStream out;
+//	
+//	private static BufferedInputStream in;
 
 	public static String send(String service, CustomHashMap params, int tries)
 			throws Exception {
@@ -35,7 +35,6 @@ public class Comunicacion {
 		        httpresponse.getEntity().writeTo(out);
 		        out.close();
 		        response = out.toString();
-		        //..more logic
 		    } else{
 		        //Closes the connection.
 		        httpresponse.getEntity().getContent().close();
@@ -64,11 +63,11 @@ public class Comunicacion {
 		return response;
 	}
 	
-	private static void writeStream(String service, CustomHashMap params) throws Exception {
-		
-	}
-	
-	private static String readStream() throws Exception {
-		return null;
-	}
+//	private static void writeStream(String service, CustomHashMap params) throws Exception {
+//		
+//	}
+//	
+//	private static String readStream() throws Exception {
+//		return null;
+//	}
 }
