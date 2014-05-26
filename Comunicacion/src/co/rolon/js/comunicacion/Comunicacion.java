@@ -16,30 +16,39 @@ import co.rolon.js.estructuras.CustomHashMap;
 
 public class Comunicacion {
 
-	private final static String URL = "http://localhost:8080/TeleConsulta-war/cliente/movil/";
+	private final static String URL = "http://157.253.222.64:8080/TeleConsulta-war/cliente/movil/";
 	
-//	private static BufferedOutputStream out;
+	public static String response = "";
+
+	//	private static BufferedOutputStream out;
 //	
 //	private static BufferedInputStream in;
 
-	public static String send(String service, CustomHashMap params, int tries)
-			throws Exception {
-		String response = "";
+	public static String send(final String service, final CustomHashMap params, int tries) {
 //		HttpURLConnection conn = null;
 		try {
-			HttpClient httpclient = new DefaultHttpClient();
-		    HttpResponse httpresponse = httpclient.execute(new HttpPost(URL + service + "?" + params.toString()));
-		    StatusLine statusLine = httpresponse.getStatusLine();
-		    if(statusLine.getStatusCode() == HttpStatus.SC_OK){
-		        ByteArrayOutputStream out = new ByteArrayOutputStream();
-		        httpresponse.getEntity().writeTo(out);
-		        out.close();
-		        response = out.toString();
-		    } else{
-		        //Closes the connection.
-		        httpresponse.getEntity().getContent().close();
-		        throw new IOException(statusLine.getReasonPhrase());
-		    }
+			new Thread() {
+				public void run() {
+					try {
+						HttpClient httpclient = new DefaultHttpClient();
+						HttpResponse httpresponse = httpclient.execute(new HttpPost(URL + service + "?" + params.toString()));
+						StatusLine statusLine = httpresponse.getStatusLine();
+						if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+							ByteArrayOutputStream out = new ByteArrayOutputStream();
+							httpresponse.getEntity().writeTo(out);
+							out.close();
+							response = out.toString();
+						} else{
+							//Closes the connection.
+							httpresponse.getEntity().getContent().close();
+							throw new IOException(statusLine.getReasonPhrase());
+						}
+						
+					} catch(Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}.start();
 //			conn = (HttpURLConnection) new URL(URL).openConnection();
 //			conn.setDoOutput(true);
 //			conn.setChunkedStreamingMode(0);
@@ -49,12 +58,13 @@ public class Comunicacion {
 //			
 //			in = new BufferedInputStream(conn.getInputStream());
 //			response = readStream();
-		} catch (IOException e) {
-			if (tries == 0) {
-				throw new ConnectTimeoutException();
-			} else {
-				send(service, params, tries - 1);
-			}
+		} catch (Exception e) {
+//			if (tries == 0) {
+			System.out.println("COMUNICACION");
+				e.printStackTrace();
+//			} else {
+//				send(service, params, tries - 1);
+//			}
 		} finally {
 //			if(conn != null) {
 //				conn.disconnect();				

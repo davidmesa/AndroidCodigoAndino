@@ -6,7 +6,7 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="src" path="/android-support-v7-appcompat"/>
-	<classpathentry exported="true" kind="lib" path="libs/comunicacion.jar"/>
+	<classpathentry kind="lib" path="libs/comunicacion.jar"/>
 	<classpathentry kind="lib" path="libs/seguridad.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

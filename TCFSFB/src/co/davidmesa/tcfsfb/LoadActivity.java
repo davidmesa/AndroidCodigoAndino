@@ -44,7 +44,7 @@ public class LoadActivity extends ActionBarActivity {
 						public void onClick(View view) {
 							//PROCEDIMIENTO
 							try {
-//								System.out.println(Comunicacion.send("auth", new CustomHashMap().put("id", "cristiansierra").put("password", "algo"), 1));
+								System.out.println(Comunicacion.send("auth", new CustomHashMap().put("id", "cristiansierra").put("password", "algo"), 1));
 								
 //								String simetrica=Comunicacion.send("getSymmetricKey", new CustomHashMap(), 1);
 //								String oculto=(Comunicacion.send("auth", new CustomHashMap().put("id", usuario.toString()).put("password", contrasenia.toString()), 1));
