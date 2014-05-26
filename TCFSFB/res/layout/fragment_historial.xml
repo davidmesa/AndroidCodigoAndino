@@ -20,6 +20,82 @@
         android:gravity="center|top"
         android:orientation="vertical" >
 
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HISTORICOS"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/btnConsultarIMC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="IMC" />
+
+            <LinearLayout
+                android:layout_width="80dp"
+                android:layout_height="match_parent" >
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnConsultarTension"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tension" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="20dp"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/lblSaludoReporteIMC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha                        Reporte IMC"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/lblSaludoReportePresion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fecha              Siastole   Diastole   Pulso"
+            android:visibility="gone" />
+
+        <ListView
+            android:id="@+id/listIMC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
+
+        </ListView>
+
+        <ListView
+            android:id="@+id/listTension"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
+
+        </ListView>
+
     </LinearLayout>
 
 </RelativeLayout>
