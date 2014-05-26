@@ -16,7 +16,7 @@ import co.rolon.js.estructuras.CustomHashMap;
 
 public class Comunicacion {
 
-	private final static String URL = "http://157.253.224.67:8080/TeleConsulta-war/cliente/movil/";
+	private final static String URL = "http://localhost:8080/TeleConsulta-war/cliente/movil/";
 	
 //	private static BufferedOutputStream out;
 //	

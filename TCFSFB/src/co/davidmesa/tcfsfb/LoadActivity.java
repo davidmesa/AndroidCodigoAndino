@@ -1,33 +1,74 @@
 package co.davidmesa.tcfsfb;
 
+import javax.crypto.Cipher;
+
 import co.rolon.js.comunicacion.Comunicacion;
 import co.rolon.js.estructuras.CustomHashMap;
+import co.rolon.js.seguridad.Seguridad;
+import co.rolon.js.seguridad.Transformacion;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.os.Build;
 
 public class LoadActivity extends ActionBarActivity {
 
+	private EditText usuario;
+	private EditText contrasenia;
+	private Button btnIniciarSesion;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_load);
 
-		if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
-		
+		System.out.println("Inicio");
 		try {
-			System.out.println(Comunicacion.send("auth", new CustomHashMap().put("id", "juan").put("password", "juan"), 1));
+//			System.out.println(Comunicacion.send("auth", new CustomHashMap().put("id", "cristiansierra").put("password", "algo"), 1));
+			
+			usuario = (EditText) findViewById(R.id.txtUsuario);
+			contrasenia = (EditText) findViewById(R.id.txtContrasenia);
+			btnIniciarSesion = (Button) findViewById(R.id.btnIniciarSesion);
+			btnIniciarSesion.setOnClickListener(
+					new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							//PROCEDIMIENTO
+							try {
+//								System.out.println(Comunicacion.send("auth", new CustomHashMap().put("id", "cristiansierra").put("password", "algo"), 1));
+								
+//								String simetrica=Comunicacion.send("getSymmetricKey", new CustomHashMap(), 1);
+//								String oculto=(Comunicacion.send("auth", new CustomHashMap().put("id", usuario.toString()).put("password", contrasenia.toString()), 1));
+//								REVISAR PROCEDIMIENTO DESCIFRADO
+//								c.init(Cipher.ENCRYPT_MODE, KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(destransformar(PRIVATE_KEY))));
+//						        transformar(c.doFinal(destransformar(SYMMETRIC_KEY)));								
+//								String token=Seguridad.descifrarSimetrico(simetrica, oculto);
+								
+//								Comparar si lo que descifro esta bien, si esta mal, arroja Excepcion
+								
+								finish();
+								Intent homepage = new Intent(LoadActivity.this, Main.class);
+								startActivity(homepage);
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								System.out.println(e);
+								System.out.println(e.getMessage());
+								e.printStackTrace();
+							}
+						}
+					});
+			
 		} catch (Exception e) {
+			System.out.println(e);
 			e.getStackTrace();
 		}
 	}
