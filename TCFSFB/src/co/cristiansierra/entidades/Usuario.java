@@ -14,7 +14,7 @@ public class Usuario {
 	}
 
 	private Usuario() {
-		
+		token=null;
 	}
 
 	public String getToken() {

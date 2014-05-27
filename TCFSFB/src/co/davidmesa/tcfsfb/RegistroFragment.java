@@ -38,7 +38,7 @@ public class RegistroFragment extends Fragment {
 	 * fragment.
 	 */
 	private static final String ARG_SECTION_NUMBER = "section_number";
-	public final static String URL = "http://157.253.224.36:8080/TeleConsulta-war/cliente/movil/";
+	public final static String URL = "http://192.168.0.10:8080/TeleConsulta-war/cliente/movil/";
 	
 	/**
 	 * Returns a new instance of this fragment for the given section
@@ -101,15 +101,16 @@ public class RegistroFragment extends Fragment {
 					@Override
 					public void onClick(View view) {
 						try {
-							if(checkEstatura.isChecked())
+							if(!checkEstatura.isChecked())
 							{
-								new RegistrarTask(instancia.getActivity()).execute(URL + "imc" + "?" + "token="+ Usuario.darInstancia().getToken() + "&peso=" + txtPeso.getText() + "&altura=" + "-1");
+								new RegistrarTask(instancia.getActivity()).execute(URL + "imc" + "?" + "token="+ Usuario.darInstancia().getToken() + "&peso=" + txtPeso.getText() + "&altura=" + "0");
 							}
 							else
 							{
-								new RegistrarTask(instancia.getActivity()).execute(URL + "imc" + "?" + "token="+ Usuario.darInstancia().getToken() + "&peso=" + txtPeso.getText() + "&altura=" + txtEstatura.getText());
+								new RegistrarTask(instancia.getActivity()).execute(URL + "imc" + "?" + "token="+ Usuario.darInstancia().getToken() + "&peso=" + Double.parseDouble((String) txtPeso.getText()) + "&altura=" + Integer.parseInt((String) txtEstatura.getText()));
 							}
-//							Descifra la respuesta si esta bien, continua sino arroja excepcion
+							txtPeso.setText("");
+							txtEstatura.setText("");
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
@@ -122,8 +123,12 @@ public class RegistroFragment extends Fragment {
 					@Override
 					public void onClick(View view) {
 						try {
+							System.out.println("REQUEST");
+							System.out.println(URL + "tension" + "?" + "token="+ Usuario.darInstancia().getToken() + "&diastole=" + txtDiastole.getText() + "&siastole=" + txtSiastole.getText() + "&pulso="+txtPulso.getText());
 							new RegistrarTask(instancia.getActivity()).execute(URL + "tension" + "?" + "token="+ Usuario.darInstancia().getToken() + "&diastole=" + txtDiastole.getText() + "&siastole=" + txtSiastole.getText() + "&pulso="+txtPulso.getText());
-//							Descifra la respuesta si esta bien, continua sino arroja excepcion
+							txtSiastole.setText("");
+							txtDiastole.setText("");
+							txtPulso.setText("");
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();

@@ -45,7 +45,7 @@ public class HistorialFragment extends Fragment {
 	 * fragment.
 	 */
 	private static final String ARG_SECTION_NUMBER = "section_number";
-	public final static String URL = "http://157.253.224.36:8080/TeleConsulta-war/cliente/movil/";
+	public final static String URL = "http://192.168.0.10:8080/TeleConsulta-war/cliente/movil/";
 	/**
 	 * Returns a new instance of this fragment for the given section
 	 * number.
@@ -172,11 +172,11 @@ class ReportesIMCTask extends AsyncTask<String, String, String>{
 			System.out.println("Reporte IMC\n"+mensaje);
 
 			List<ReporteIMC> reportesIMC = new ArrayList<ReporteIMC>();
-
-			String[] reportes=mensaje.split("*");
-			if(reportes.length>2)
+			
+			String[] reportes=mensaje.split("&");
+			if(reportes.length>1)
 			{
-				for(int i=1; i<reportes.length-1; i++)
+				for(int i=1; i<reportes.length; i++)
 				{
 					String[] datos=reportes[i].split("-");
 					reportesIMC.add(new ReporteIMC(Double.parseDouble(datos[1]), Double.parseDouble(datos[2]), datos[0]));
@@ -242,10 +242,10 @@ class ReportesTensionTask extends AsyncTask<String, String, String>{
 
 			List<ReporteTension> reportesTension = new ArrayList<ReporteTension>();
 
-			String[] reportes=mensaje.split("*");
-			if(reportes.length>2)
+			String[] reportes=mensaje.split("&");
+			if(reportes.length>1)
 			{
-				for(int i=1; i<reportes.length-1; i++)
+				for(int i=1; i<reportes.length; i++)
 				{
 					String[] datos=reportes[i].split("-");
 					reportesTension.add(new ReporteTension(Integer.parseInt(datos[2]), Integer.parseInt(datos[1]), Integer.parseInt(datos[3]), datos[0]));

@@ -58,7 +58,7 @@ public class ReporteIMCAdapter extends BaseAdapter {
 
 	    ReporteIMC item = listaReportesIMC.get(position);
 	    fecha.setText(item.getFechaReporte());
-	    imc.setText((int) item.getIMC()+"="+item.getPeso()+"/"+item.getAltura()+"^2");
+	    imc.setText((int) (item.getIMC())+"="+item.getPeso()+"/"+item.getAltura()+"^2");
 
 	    return roowView;
 	}

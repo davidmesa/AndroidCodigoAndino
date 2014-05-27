@@ -26,6 +26,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -43,7 +44,7 @@ public class LoadActivity extends ActionBarActivity {
 	private EditText usuario;
 	private EditText contrasenia;
 	private Button btnIniciarSesion;
-	public final static String URL = "http://157.253.224.36:8080/TeleConsulta-war/cliente/movil/";
+	public final static String URL = "http://192.168.0.10:8080/TeleConsulta-war/cliente/movil/";
 	public Activity instancia;
 	
 	@Override
@@ -72,6 +73,12 @@ public class LoadActivity extends ActionBarActivity {
 							}
 						}
 					});
+			if(Usuario.darInstancia().getToken()!=null)
+			{
+				finish();
+				Intent homepage = new Intent(LoadActivity.this, Main.class);
+				startActivity(homepage);
+			}
 			
 		} catch (Exception e) {
 			System.out.println(e);
@@ -163,19 +170,24 @@ class RequestTask extends AsyncTask<String, String, String>{
         System.out.println(result);
         try {
 			JSONObject a=new JSONObject(result);
-			String token=(String) a.get("token");
-			System.out.println(token);
+			String status=(String) a.get("status");
 			
-			if(token!=null)
+			if(status.equals("ok"))
 			{
-				Usuario.darInstancia().setToken(token);
+				Usuario.darInstancia().setToken(a.getString("token"));
 				asociada.finish();
 				Intent homepage = new Intent(asociada, Main.class);
 				asociada.startActivity(homepage);
 			}
 			else
 			{
-				asociada.recreate();
+				final AlertDialog.Builder mensaje = new AlertDialog.Builder(asociada);
+				mensaje.setIcon(R.drawable.error);
+				mensaje.setTitle("Atencion");
+				mensaje.setPositiveButton("OK",null);
+				mensaje.setMessage(a.getString("mensaje"));
+				mensaje.create();
+				mensaje.show();
 			}
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block

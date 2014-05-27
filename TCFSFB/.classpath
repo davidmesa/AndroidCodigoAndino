@@ -7,6 +7,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="libs/comunicacion.jar"/>
 	<classpathentry kind="lib" path="libs/seguridad.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/appcompat_v7"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/android-support-v7-appcompat"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>
