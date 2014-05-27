@@ -56,7 +56,7 @@ public class ReporteTensionAdapter extends BaseAdapter{
 	    TextView imc = (TextView) roowView.findViewById(R.id.lblTension);
 
 	    ReporteTension item = listaReportesTension.get(position);
-	    fecha.setText(item.getFechaString());
+	    fecha.setText(item.getFechaReporte());
 	    imc.setText(item.getSiastole()+"  "+item.getDiastole()+"  "+item.getPulso());
 
 	    return roowView;

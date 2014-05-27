@@ -57,7 +57,7 @@ public class ReporteIMCAdapter extends BaseAdapter {
 	    TextView imc = (TextView) roowView.findViewById(R.id.lblIMC);
 
 	    ReporteIMC item = listaReportesIMC.get(position);
-	    fecha.setText(item.getFechaString());
+	    fecha.setText(item.getFechaReporte());
 	    imc.setText((int) item.getIMC()+"="+item.getPeso()+"/"+item.getAltura()+"^2");
 
 	    return roowView;

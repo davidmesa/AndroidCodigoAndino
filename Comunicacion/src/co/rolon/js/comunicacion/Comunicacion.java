@@ -18,7 +18,7 @@ public class Comunicacion {
 
 	private final static String URL = "http://157.253.222.64:8080/TeleConsulta-war/cliente/movil/";
 	
-	public static String response = "";
+	public static String response;
 
 	//	private static BufferedOutputStream out;
 //	
@@ -26,6 +26,7 @@ public class Comunicacion {
 
 	public static String send(final String service, final CustomHashMap params, int tries) {
 //		HttpURLConnection conn = null;
+		response = "";
 		try {
 			new Thread() {
 				public void run() {

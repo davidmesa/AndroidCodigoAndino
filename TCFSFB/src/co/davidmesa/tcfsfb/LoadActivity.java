@@ -1,7 +1,23 @@
 package co.davidmesa.tcfsfb;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import javax.crypto.Cipher;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONStringer;
+
+import co.cristiansierra.entidades.Usuario;
 import co.rolon.js.comunicacion.Comunicacion;
 import co.rolon.js.estructuras.CustomHashMap;
 import co.rolon.js.seguridad.Seguridad;
@@ -9,7 +25,9 @@ import co.rolon.js.seguridad.Transformacion;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,16 +43,16 @@ public class LoadActivity extends ActionBarActivity {
 	private EditText usuario;
 	private EditText contrasenia;
 	private Button btnIniciarSesion;
+	public final static String URL = "http://157.253.224.36:8080/TeleConsulta-war/cliente/movil/";
+	public Activity instancia;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		instancia=this;
 		setContentView(R.layout.activity_load);
-
 		System.out.println("Inicio");
 		try {
-//			System.out.println(Comunicacion.send("auth", new CustomHashMap().put("id", "cristiansierra").put("password", "algo"), 1));
-			
 			usuario = (EditText) findViewById(R.id.txtUsuario);
 			contrasenia = (EditText) findViewById(R.id.txtContrasenia);
 			btnIniciarSesion = (Button) findViewById(R.id.btnIniciarSesion);
@@ -42,22 +60,10 @@ public class LoadActivity extends ActionBarActivity {
 					new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							//PROCEDIMIENTO
 							try {
-								System.out.println(Comunicacion.send("auth", new CustomHashMap().put("id", "cristiansierra").put("password", "algo"), 1));
-								
-//								String simetrica=Comunicacion.send("getSymmetricKey", new CustomHashMap(), 1);
-//								String oculto=(Comunicacion.send("auth", new CustomHashMap().put("id", usuario.toString()).put("password", contrasenia.toString()), 1));
-//								REVISAR PROCEDIMIENTO DESCIFRADO
-//								c.init(Cipher.ENCRYPT_MODE, KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(destransformar(PRIVATE_KEY))));
-//						        transformar(c.doFinal(destransformar(SYMMETRIC_KEY)));								
-//								String token=Seguridad.descifrarSimetrico(simetrica, oculto);
-								
-//								Comparar si lo que descifro esta bien, si esta mal, arroja Excepcion
-								
-								finish();
-								Intent homepage = new Intent(LoadActivity.this, Main.class);
-								startActivity(homepage);
+								System.out.println(URL + "auth" + "?" + "id="+ usuario.getText() + "&password=" + contrasenia.getText());
+								new RequestTask(instancia).execute(URL + "auth" + "?" + "id="+ usuario.getText() + "&password=" + contrasenia.getText());
+
 							} catch (Exception e) {
 								// TODO Auto-generated catch block
 								System.out.println(e);
@@ -109,5 +115,72 @@ public class LoadActivity extends ActionBarActivity {
 			return rootView;
 		}
 	}
+}
 
+class RequestTask extends AsyncTask<String, String, String>{
+
+	Activity asociada;
+	
+	public RequestTask(Activity param)
+	{
+		asociada=param;
+	}
+	
+	@Override
+    protected String doInBackground(String... uri) {
+    	System.out.println("LLEGA INFORMACION DEL POST "+uri[0]);
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpResponse response;
+        String responseString = null;
+        try {
+            response = httpclient.execute(new HttpGet(uri[0]));
+            StatusLine statusLine = response.getStatusLine();
+            if(statusLine.getStatusCode() == HttpStatus.SC_OK){
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                response.getEntity().writeTo(out);
+                out.close();
+                responseString = out.toString();
+            } else{
+                //Closes the connection.
+                response.getEntity().getContent().close();
+                throw new IOException(statusLine.getReasonPhrase());
+            }
+        } catch (ClientProtocolException e) {
+            //TODO Handle problems..
+        	System.err.println("Error en primer lado");
+        	System.err.println(e.getMessage());
+        } catch (IOException e) {
+            //TODO Handle problems..
+        	System.err.println("Error en primer lado");
+        	System.err.println(e.getMessage());
+        }
+        return responseString;
+    }
+
+    @Override
+    protected void onPostExecute(String result) {
+        super.onPostExecute(result);
+        System.out.println(result);
+        try {
+			JSONObject a=new JSONObject(result);
+			String token=(String) a.get("token");
+			System.out.println(token);
+			
+			if(token!=null)
+			{
+				Usuario.darInstancia().setToken(token);
+				asociada.finish();
+				Intent homepage = new Intent(asociada, Main.class);
+				asociada.startActivity(homepage);
+			}
+			else
+			{
+				asociada.recreate();
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+    }
 }

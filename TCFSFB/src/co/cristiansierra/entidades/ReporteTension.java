@@ -24,12 +24,12 @@ public class ReporteTension {
 	/**
 	 * Fecha de realizacion del reporte
 	 */
-	private Date fechaReporte;
+	private String fechaReporte;
 
 	//-------------------------------------------------------------------------
 	//  Constructor
 	//-------------------------------------------------------------------------
-	public ReporteTension(int paramDiastole, int paramSiastole, int paramPulsaciones, Date fecha) {
+	public ReporteTension(int paramDiastole, int paramSiastole, int paramPulsaciones, String fecha) {
 		diastole=paramDiastole;
 		siastole=paramSiastole;
 		pulso=paramPulsaciones;
@@ -67,7 +67,7 @@ public class ReporteTension {
 	 * Retorna la fecha del reporte
 	 * @return Date, que indica la hora "exacta" de realizacion del examen
 	 */
-	public Date getFechaReporte() {
+	public String getFechaReporte() {
 		return fechaReporte;
 	}
 

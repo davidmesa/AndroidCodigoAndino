@@ -25,12 +25,12 @@ public class ReporteIMC {
 	/**
 	 * Fecha del Reporte de IMC
 	 */
-	private Date fechaReporte;
+	private String fechaReporte;
 
 	//-------------------------------------------------------------------------
 	//  Constructor
 	//-------------------------------------------------------------------------
-	public ReporteIMC( double paramPeso, double paramAltura, Date fecha)
+	public ReporteIMC( double paramPeso, double paramAltura, String fecha)
 	{
 		peso=paramPeso;
 		altura=paramAltura;
@@ -70,7 +70,7 @@ public class ReporteIMC {
 	 * Retorna la Fecha en la que se realizo el Reporte
 	 * @return Fecha Reporte
 	 */
-	public Date getFechaReporte() {
+	public String getFechaReporte() {
 		return fechaReporte;
 	}
 
